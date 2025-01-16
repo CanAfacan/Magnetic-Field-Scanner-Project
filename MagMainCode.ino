@@ -5,20 +5,19 @@
 
 Servo myServo;
 
-const int joystickXPin = A0; // 
-const int joystickYPin = A1; // 
+const int joystickXPin = A0; 
+const int joystickYPin = A1; 
 
-// Servo settings
 const int servoPin = 9;       
 const int servoCenter = 90;    
 const int servoRange = 90;     
 
-// Deadzone to ignore minor joystick movements
+// Deadzone angle for servo
 const int deadzone = 5;
 
 QMC5883LCompass compass;
 
-// Variables to store initial offset
+// initial offset
 float initialX = 0.0;
 float initialY = 0.0;
 float initialZ = 0.0;
@@ -51,15 +50,14 @@ void loop() {
   int y = compass.getY();
   int z = compass.getZ();
 
-  // Convert to microteslas (µT)
+  // units are in µT
   float xMag = x / 100.0 - initialX;
   float yMag = y / 100.0 - initialY;
   float zMag = z / 100.0 - initialZ;
 
-  // Check if magnetic field is significant
+  // Hall Switch checks if B-field is significant
   bool magneticFieldDetected = voltage < 4.5;
 
-  // Send all data to the serial monitor
   Serial.print("JoystickX: "); Serial.print(joystickX);
   Serial.print(", JoystickY: "); Serial.print(joystickY);
   Serial.print(", Voltage: "); Serial.print(voltage, 3);
